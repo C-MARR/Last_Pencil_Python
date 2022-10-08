@@ -1,3 +1,11 @@
+def print_possible_pencils():
+    print("Possible values: '1'", end='')
+    if pencils == 2:
+        print(" or '2'")
+    else:
+        print(", '2' or '3'")
+
+
 print("How many pencils would you like to use:")
 pencils = input()
 while not pencils.isnumeric() or pencils == "0":
@@ -22,6 +30,26 @@ while pencils > 0:
         print(f"{first_name}'s turn:")
     elif not first_name_turn:
         print(f"{second_name}'s turn:")
-    pencils -= int(input())
+    while True:
+        console_input = input()
+        if not console_input.isdigit():
+            pencils_to_take = 0
+        else:
+            pencils_to_take = int(console_input)
+        if pencils_to_take not in range(1, 4):
+            print_possible_pencils()
+        else:
+            if pencils - pencils_to_take < 0:
+                print("Too many pencils were taken")
+            else:
+                pencils -= pencils_to_take
+                break
     first_name_turn = not first_name_turn
+    if pencils == 0:
+        if first_name_turn:
+            print(f"{first_name} won!")
+        elif not first_name_turn:
+            print(f"{second_name} won!")
+        break
+
 
