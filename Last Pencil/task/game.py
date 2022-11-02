@@ -1,9 +1,24 @@
-def print_possible_pencils():
+from random import randint
+
+
+def print_possible_pencils(valid=True):
     print("Possible values: '1'", end='')
-    if pencils == 2:
+    if pencils == 2 and valid:
         print(" or '2'")
     else:
         print(", '2' or '3'")
+
+
+def bot_turn():
+    bot_pick = ""
+    if pencils % 4 == 0:
+        bot_pick = "3"
+    if pencils % 4 == 3:
+        bot_pick = "2"
+    elif pencils % 4 == 1 or pencils % 4 == 2:
+        bot_pick = "1"
+    print(bot_pick)
+    return bot_pick
 
 
 print("How many pencils would you like to use:")
@@ -27,17 +42,20 @@ if first == second_name:
 while pencils > 0:
     print("|" * pencils)
     if first_name_turn:
-        print(f"{first_name}'s turn:")
+        print(f"{first_name}'s turn!")
     elif not first_name_turn:
         print(f"{second_name}'s turn:")
     while True:
-        console_input = input()
+        if first_name_turn:
+            console_input = input()
+        else:
+            console_input = bot_turn()
         if not console_input.isdigit():
             pencils_to_take = 0
         else:
             pencils_to_take = int(console_input)
         if pencils_to_take not in range(1, 4):
-            print_possible_pencils()
+            print_possible_pencils(False)
         else:
             if pencils - pencils_to_take < 0:
                 print("Too many pencils were taken")
@@ -51,5 +69,3 @@ while pencils > 0:
         elif not first_name_turn:
             print(f"{second_name} won!")
         break
-
-
